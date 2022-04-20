@@ -1,0 +1,123 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+typedef struct nodetype{
+int info;
+struct nodetype *next;
+}node;
+//function prototype
+void createEmptylist(node **head);
+void traverseInOrder(node *head);
+void traverseInRevorder(node *head);
+void InsertAtBeg(node **head,int item);
+void InsertAtEnd(node **head,int item);
+
+void main() {
+node *head;
+int choice,ele,after;
+clrscr();
+createEmptylist(&head);
+while(1)
+{
+printf("\n***OPERATIONS AVAILABLE ARE***\n");
+printf("1. INSRT AT BEGINNING\n");
+printf("2. INSRT AT END\n");
+printf("3. TRAVERSE IN ORDER\n");
+printf("4. TRAVERSE IN REVERSE ORDER\n");
+printf("  ENTER choice  :");
+scanf("%d", &choice);
+if(choice==10)
+{
+exit(0);
+}
+switch(choice)
+{
+case 1:     printf("\n Enter elements:\n");
+	    scanf("%d", &ele);
+	    InsertAtBeg(&head,ele);
+	    break;
+case 2:     printf("\nEnter Element:\n");
+	    scanf("%d", &ele);
+	    InsertAtEnd(&head,ele);
+	    break;
+case 3: if(head==NULL)
+	 printf("\n LIST is EMPTY");
+	  else
+	  traverseInOrder(head);
+	  break;
+
+case 4:   if(head==NULL)
+	  printf("\n LIST is EMPTY");
+	  else
+	  traverseInRevorder(head);
+	  printf("\nPress any key to continue");
+	  getch();
+	  break;
+	 }
+}
+}
+void createEmptylist(node **head)
+{
+ *head=NULL;
+}
+void InsertAtBeg(node **head,int item)
+{
+ node *ptr;
+ ptr=(node *)malloc(sizeof(node));
+ ptr-> info=item;
+
+ if(*head==NULL)
+ ptr-> next=NULL;
+
+ else
+ ptr-> next=*head;
+ *head=ptr;
+}
+//INSERT AT END
+void InsertAtEnd(node **head,int item)
+{
+ node *ptr,*loc;
+ ptr=(node *)malloc(sizeof(node));
+ ptr->info=item;
+ ptr->next=NULL;
+ if(*head==NULL)
+ *head=ptr;
+ else
+ {
+ loc=*head;
+ while(loc->next!=NULL)
+ loc=loc->next;
+ loc->next=ptr;
+ }
+ }
+
+void traverseInOrder(node *head)
+{
+while(head!=NULL)
+{
+printf("\n %d", head->info);
+head=head->next;
+}
+}
+ //REVERSE
+void traverseInRevorder(node *head)
+{
+ if(head->next!=NULL)
+ {
+ traverseInRevorder(head->next);
+ }
+ printf("\n %d",head->info);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
