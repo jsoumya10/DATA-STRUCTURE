@@ -9,15 +9,18 @@ struct nodetype *next;
 void createEmptylist(node **head);
 void traverseInOrder(node *head);
 void traverseInRevorder(node *head);
+node *search(node *head,int item);
 void InsertAtBeg(node **head,int item);
+void InsertAfterELE(node *head,int item,int after);
 void InsertAtEnd(node **head,int item);
 void DeletefromBeg(node **head);
 void DeletefromEND(node **head);
+//void DeleteAfterEle(node **head,)
 
 
 void main() {
 node *head;
-int choice,ele,after;
+int choice,ele,after,p;
 clrscr();
 createEmptylist(&head);
 while(1)
@@ -25,10 +28,12 @@ while(1)
 printf("\n***OPERATIONS AVAILABLE ARE***\n");
 printf("1. INSRT AT BEGINNING\n");
 printf("2. INSRT AT END\n");
-printf("3. DELETE FROM BEGINNING\n");
-printf("4. DELETE FROM END\n");
-printf("5. TRAVERSE IN ORDER\n");
-printf("6. TRAVERSE IN REVERSE ORDER\n");
+printf("3. INSERT AFTER ELEMENT\n");
+printf("4. DELETE FROM BEGINNING\n");
+printf("5. DELETE FROM END\n");
+printf("6. SEARCH THE ELEMENT\n");
+printf("7. TRAVERSE IN ORDER\n");
+printf("8. TRAVERSE IN REVERSE ORDER\n");
 printf("  ENTER choice  :");
 scanf("%d", &choice);
 if(choice==10)
@@ -45,18 +50,31 @@ case 2:     printf("\nEnter Element:\n");
 	    scanf("%d", &ele);
 	    InsertAtEnd(&head,ele);
 	   break;
-case 3:    printf("ELEMENT is delete from BEG\n");
+case 3:    printf("\n Enter element u WANT TO INSERT:\n");
+	     scanf("%d", &ele);
+	     printf("\n AFter which element:");
+
+	    InsertAfterELE(head,ele,after);
+	   break;
+case 4:    printf("ELEMENT is delete from BEG\n");
 	   DeletefromBeg(&head);
 	   break;
-case 4:    printf("ELEMENT is delete from End\n");
+
+case 5:     printf("ELEMENT is delete from End\n");
 	   DeletefromEND(&head);
 	   break;
-case 5:    if(head==NULL)
+
+case 6:   printf("\nSearch for element:");
+	    p=search(head,ele);
+	  printf("%d",p);
+	    break;
+
+case 7:  if(head==NULL)
 	   printf("\n LIST is EMPTY");
 	   else
 	  traverseInOrder(head);
 	  break;
-case 6:   if(head==NULL)
+case 8:  if(head==NULL)
 	  printf("\n LIST is EMPTY");
 	  else
 	  traverseInRevorder(head);
@@ -66,10 +84,12 @@ case 6:   if(head==NULL)
 	 }
 }
 }
+
 void createEmptylist(node **head)
 {
  *head=NULL;
 }
+//INSERT AT BEG
 void InsertAtBeg(node **head,int item)
 {
  node *ptr;
@@ -100,7 +120,27 @@ void InsertAtEnd(node **head,int item)
  loc->next=ptr;
  }
  }
-
+ //INSERT AFTER ELEMENT
+ void InsertAfterELE(node *head,int item,int after)
+ {
+ node *ptr,*loc;
+ loc=search(head,after);
+ if(loc==(node *)NULL)
+ return;
+ ptr=(node *)malloc(sizeof(node));
+ ptr->info=item;
+ ptr->next=loc->next;
+ loc->next=ptr;
+ }
+ //SEARCH
+ node *search(node *head,int item)
+ {
+ scanf("%d",&item);
+ while((head!=NULL)&&(head->info!=item))
+ head=head->next;
+ return head;
+ }
+ //TRAVERSE IN ORDER
 void traverseInOrder(node *head)
 {
 while(head!=NULL)
