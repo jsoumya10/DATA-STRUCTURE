@@ -15,8 +15,7 @@ void InsertAfterELE(node *head,int item,int after);
 void InsertAtEnd(node **head,int item);
 void DeletefromBeg(node **head);
 void DeletefromEND(node **head);
-//void DeleteAfterEle(node **head,)
-
+void DeleteAfterEle(node *head,int after);
 
 void main() {
 node *head;
@@ -26,17 +25,18 @@ createEmptylist(&head);
 while(1)
 {
 printf("\n***OPERATIONS AVAILABLE ARE***\n");
-printf("1. INSRT AT BEGINNING\n");
-printf("2. INSRT AT END\n");
-printf("3. INSERT AFTER ELEMENT\n");
-printf("4. DELETE FROM BEGINNING\n");
-printf("5. DELETE FROM END\n");
-printf("6. SEARCH THE ELEMENT\n");
-printf("7. TRAVERSE IN ORDER\n");
-printf("8. TRAVERSE IN REVERSE ORDER\n");
-printf("  ENTER choice  :");
+printf("1. INSRT AT BEGINNING\t");
+printf("2. INSRT AT END\t");
+printf("3. INSERT AFTER ELEMENT\t");
+printf("4. DELETE FROM BEGINNING\t");
+printf("5. DELETE FROM END\t");
+printf("6. DELETE AFTER ELEMENT\t");
+printf("7. SEARCH THE ELEMENT\t");
+printf("8. TRAVERSE IN ORDER\t");
+printf("9. TRAVERSE IN REVERSE ORDER\t");
+printf(" \n ENTER choice  :");
 scanf("%d", &choice);
-if(choice==10)
+if(choice==20)
 {
 exit(0);
 }
@@ -64,17 +64,22 @@ case 5:     printf("ELEMENT is delete from End\n");
 	   DeletefromEND(&head);
 	   break;
 
-case 6:   printf("\nSearch for element:");
-	    p=search(head,ele);
+case 6:  printf("enter element u want to delete\n");
+	  scanf("%d",&ele);
+	  printf("\nAfter which element");
+	  DeleteAfterEle(head,after);
+	  break;
+case 7:   printf("\nSearch for element:");
+	    p=(int)search(head,ele);
 	  printf("%d",p);
 	    break;
 
-case 7:  if(head==NULL)
+case 8:  if(head==NULL)
 	   printf("\n LIST is EMPTY");
 	   else
 	  traverseInOrder(head);
 	  break;
-case 8:  if(head==NULL)
+case 9:  if(head==NULL)
 	  printf("\n LIST is EMPTY");
 	  else
 	  traverseInRevorder(head);
@@ -158,6 +163,7 @@ void traverseInRevorder(node *head)
  }
  printf("\n %d",head->info);
 }
+//DELETE FROM BEG
 void DeletefromBeg(node **head)
 {
 node *ptr;
@@ -168,6 +174,7 @@ if(*head==NULL)
    free(ptr);
    }
    }
+//DELETE FROM END
    void DeletefromEND(node **head)
 {
 node *ptr,*loc;
@@ -190,6 +197,17 @@ if(*head==NULL)
    loc->next=NULL;
    free(ptr);
    }
+//DELETE AFTER ELEMENT
+void DeleteAfterEle(node *head,int after)
+{
+node *ptr,*loc;
+loc=search(head,after);
+if(loc==(node *)NULL)
+return;
+ptr=loc->next;
+loc->next=ptr->next;
+free(ptr);
+}
 
 
 
