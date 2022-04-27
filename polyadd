@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<alloc.h>
+#include<conio.h>
+typedef struct polynomial
+{
+int coe;
+int pow;
+struct polynomial*next;
+}node;
+void main()
+{
+void insertatbegin(node**,int,int);
+void traverse(node*);
+node*head=NULL;
+int n,c,p,i;
+clrscr();
+printf("enter number of terms\n");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+printf("enter coefficient of the polynomial\n");
+scanf("%d",&c);
+printf("enter power of the polynomial\n");
+scanf("%d",&p);
+insertatbegin(&head,c,p);
+printf("node is inserted at begining\n");
+}
+traverse(head);
+getch();
+}
+void insertatbegin(node**head,int c,int p)
+{
+node*temp=(node*)malloc(sizeof(node));
+temp->coe=c;
+temp->pow=p;
+if(*head==NULL)
+{
+temp->next=NULL;
+}
+else
+{
+temp->next=*head;
+}
+*head=temp;
+}
+void traverse(node*head)
+{
+node*ptr=head;
+while(ptr!=NULL)
+{
+if(ptr->coe>0)
+{
+printf("+%dx^%d",ptr->coe,ptr->pow);
+}
+else
+{
+printf("%dx^%d",ptr->coe,ptr->pow);
+}
+ptr=ptr->next;
+}
+}
