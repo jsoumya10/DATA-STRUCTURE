@@ -1,61 +1,125 @@
 #include<stdio.h>
-#include<alloc.h>
 #include<conio.h>
-typedef struct polynomial
-{
-int coe;
-int pow;
-struct polynomial*next;
+typedef struct polynomial{
+int coeff;
+int power;
+struct polynomial *next;
 }node;
-void main()
-{
-void insertatbegin(node**,int,int);
-void traverse(node*);
-node*head=NULL;
-int n,c,p,i;
+
+void main(){
+node *poly1,*poly2,*poly3;
+int choice,element,after,before;
+void readPolynomial(node **);
+void printPolynomial(node *);
+void addPolynomial(node *,node *, node **);
+void addNode(node ** , float,int);
+void deletePolynomial(node **);
+poly1=poly2=poly3=NULL;
+
 clrscr();
-printf("enter number of terms\n");
-scanf("%d",&n);
-for(i=0;i<n;i++)
-{
-printf("enter coefficient of the polynomial\n");
-scanf("%d",&c);
-printf("enter power of the polynomial\n");
-scanf("%d",&p);
-insertatbegin(&head,c,p);
-printf("node is inserted at begining\n");
-}
-traverse(head);
+printf("\n program to add two polynomial");
+printf("\n++++++++++++++++++++++++\n\n");
+printf("enter first polynomial\n");
+readPolynomial(&poly1);
+printf("enter second polynomial\n");
+readPolynomial(&poly2);
+addPolynomial(poly1,poly2,&poly3);
+printf("/n sum of polynomial\n");
+printPolynomial(poly1);
+printf("\nand\n");
+printPolynomial(poly2);
+printf("\nis\n");
+printPolynomial(poly3);
 getch();
+deletePolynomial(&poly1);
+deletePolynomial(&poly2);
+deletePolynomial(&poly3);
 }
-void insertatbegin(node**head,int c,int p)
-{
-node*temp=(node*)malloc(sizeof(node));
-temp->coe=c;
-temp->pow=p;
-if(*head==NULL)
-{
-temp->next=NULL;
+
+
+void addNode(node **ptr,float coef,int powe){
+node *tempPtr;
+tempPtr=(node*) malloc (sizeof(node));
+tempPtr->coeff=coef;
+tempPtr->power=powe;
+if(*ptr==NULL){
+tempPtr->next=NULL;
+*ptr=tempPtr;
 }
+else{
+tempPtr->next=*ptr;
+*ptr=tempPtr;
+}
+}
+void readPolynomial(node **p){
+int coeficient,power;
+printf("\n enter the terms in ascending oreder of power");
+while(1){
+printf("\enter degree  of x:");
+scanf("%d",&power);
+printf("enter its coefficient\n");
+scanf("%f",&coeficient);
+addNode(p,coeficient,power);
+printf("\n any more term (Y?N)?:");
+if(toupper(getch())=='N')
+break;
+}
+}
+void printPolynomial(node *ptr){
+if(ptr!=NULL)
+printf("%dx^%d",ptr->coeff,ptr->power);
+for(ptr=ptr->next;ptr!=NULL;ptr=ptr->next)
+{
+if(ptr->coeff>0)
+printf(" + ");
+if(ptr->power==0)
+printf("%d",ptr->coeff);
+else if(ptr->power==1)
+printf("%dx",ptr->coeff);
 else
-{
-temp->next=*head;
+printf("%dx^%d",ptr->coeff,ptr->power);
 }
-*head=temp;
 }
-void traverse(node*head)
-{
-node*ptr=head;
-while(ptr!=NULL)
-{
-if(ptr->coe>0)
-{
-printf("+%dx^%d",ptr->coe,ptr->pow);
+void addPolynomial(node *ptr1, node *ptr2,node **ptr3){
+int powe;
+float coef;
+while((ptr1!=NULL) && (ptr2!=NULL)){
+if((ptr1->power) > (ptr2->power)){
+powe=ptr1->power;
+coef=ptr1->coeff;
+ptr1=ptr1->next;
 }
-else
-{
-printf("%dx^%d",ptr->coe,ptr->pow);
+else if(ptr1->power <ptr2->power) {
+powe=ptr2->power;
+coef=ptr2->coeff;
+ptr2=ptr2->next;
 }
-ptr=ptr->next;
+else{
+coef=ptr1->coeff +ptr2->coeff;
+powe=ptr1->power;
+ptr1=ptr1->next;
+ptr2=ptr2->next;
 }
+
+ if(coef!=0){
+ addNode(ptr3,coef,powe);
+ }
+  }// while close
+
+  if(ptr1==NULL){
+ for(;ptr2!=NULL;ptr2=ptr2->next)
+ addNode(ptr3,ptr2->coeff,ptr2->power);
+} else if(ptr2==NULL){
+ for(;ptr1!=NULL;ptr1=ptr1->next)
+ addNode(ptr3,ptr1->coeff,ptr1->power);
+ }
+ }
+ void deletePolynomial(node **ptr)
+ {
+ node *temp;
+ while(*ptr!=NULL){
+ temp=*ptr;
+ *ptr=(*ptr)->next;
+ free(temp);
+ }
 }
