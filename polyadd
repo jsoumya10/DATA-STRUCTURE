@@ -58,7 +58,7 @@ while(1){
 printf("\enter degree  of x:");
 scanf("%d",&power);
 printf("enter its coefficient\n");
-scanf("%f",&coeficient);
+scanf("%d",&coeficient);
 addNode(p,coeficient,power);
 printf("\n any more term (Y?N)?:");
 if(toupper(getch())=='N')
