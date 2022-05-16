@@ -1,0 +1,14 @@
+SinglyLinkedListNode* reverse(SinglyLinkedListNode* llist) {
+    struct SinglyLinkedListNode* new_head = NULL;
+    struct SinglyLinkedListNode* temp;
+    
+    while(llist != NULL){
+        temp = llist->next;
+        llist->next = new_head;
+        new_head = llist;
+        llist = temp;
+    }
+    
+    return new_head;
+
+}
