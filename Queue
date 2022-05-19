@@ -1,83 +1,110 @@
 #include<stdio.h>
-#include<conio.h>
-#define N 5
-int queue[N];
-int front=-1;
-int rear=-1;
-void enqueue(int data);
-void dequeue();
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+int data;
+struct node *next;
+};
+void insert();
+void delete();
 void display();
-void peek();
+
+ struct node *front;
+ struct node *rear;
+
 void main()
 {
-int data,ch;
+int ch;
 clrscr();
-while(1){
-printf("ENTER CHOICE\n1.enqueue\t2.dequeue\t3.display\t4.peek\n");
-scanf("%d",&ch);
-switch(ch)
+while(ch!=4)
 {
-case 1: printf("Enter data\n");
-	scanf("%d", &data);
-	 enqueue(data);
-	break;
-case 2: dequeue(data);
-	   break;
-case 3: display();
+	 printf("\n1. insert an element \n 2. delete an element \n 3. display elements \n 4. exit \n");
+	 printf("\n enter the choice ");
+	 scanf("%d",&ch);
+	 switch(ch)
+	 {
+	 case 1:
+	 insert();
 	 break;
-case 4: peek();
-	break;
-case 5: exit(1);
+	 case 2:
+	 delete();
 	 break;
-default :printf("xxx U ENTER WRONG CHOICE xxx\n");
-}}}
-
-
-void enqueue(int x)
-{
-if(rear==N-1)
-{printf("****OVER FLOW****\n");}
-else if(front==-1 && rear==-1){
-front=rear=0;
-queue[rear]=x;
+	 case 3:
+	 display();
+	 break;
+	 case 4:
+	 exit(0);
+	 break;
+	 default:
+	 printf("invalid choice");
+	 }
 }
-else  {
-rear++ ;
-queue[rear]=x;}}
-
-void dequeue(){
-if(front== -1 && rear== -1)
-{
-printf("****UNDER FLOW****\n");
 }
-else if(front==rear){
-front=rear=-1;
+
+void insert()
+{
+int item ;
+struct node *ptr;
+
+ptr = (struct node*) malloc(sizeof(struct node));
+if (ptr == NULL)
+{
+printf("/n****OVERFLOW*****/n");
+return;
 }
 else
 {
-printf("\nelement delete=%d\n",queue[front]);
-front++;
+printf("\nEnter Value:");
+scanf("%d",&item);
+ptr->data=item;
+if(front==NULL)
+{
+front = ptr;
+rear = ptr;
+front->next  = NULL;
+rear->next = NULL;
+}
+else
+{
+rear->next = ptr;
+rear = ptr;
+rear->next = NULL;
+}
+}
+}
+void delete()
+{
+struct node *ptr;
+if (front == NULL)
+{
+printf("\n****underflow****\n");
+return;
+}
+else
+{
+ptr = front ;
+front = front->next;
+free(ptr);
 }
 }
 
 void display()
 {
-int i;
-if(front==-1 && rear==-1)
+struct node *ptr;
+ptr = front;
+if (front == NULL)
 {
-printf("********queue is empty**********\n");
+printf("\n****empty queue****\n");
 }
-else{
-for(i=front;i<rear+1;i++)
+else
 {
-printf("\n%d\n",queue[i]);
-}}}
+while(ptr!= NULL)
+{
+printf("\n%d",ptr->data);
+ptr = ptr->next;
+}
+}
+}
 
-void peek(){
-if(front==-1 && rear==-1)
-{
-printf("**EMPTY**\n");
-}
-else {
-printf("\n%d\n",queue[front]);
-}}
+
