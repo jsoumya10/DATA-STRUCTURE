@@ -1,0 +1,97 @@
+# include<stdio.h>
+ # include<stdlib.h>
+ # define N 5
+ int stack[N];
+ int top =-1;
+ void push();
+ void pop();
+ void peek();
+ void display();
+ void main()
+ {
+     while (1)
+     {
+         int ch;
+         printf("\n**MENU**\n");
+         printf("1.PUSH\n2.POP\n3.peek\n4.display\n");
+         printf("enter the choice\n");
+         scanf("%d",&ch);
+         switch (ch)
+         {
+         case 1:
+             push();
+             break;
+         case 2:
+             pop();
+             break;
+         case 3:
+             peek();
+             break;
+         case 4:
+             display();
+             break;
+
+         case 5:
+             exit(1);
+             break;
+         default:
+             break;
+         }
+     }
+     
+ }
+ void push(){
+     int x;
+     printf("enter the data\n");
+     scanf("%d",&x);
+     if (top==N-1)
+     {
+        printf("overflow\n");
+     }
+     else
+     {
+         top++;
+         stack[top]=x;
+
+     }
+     
+ }
+
+ void pop(){
+     int item;
+     if (top==-1)
+     {
+         printf("under flow\n");
+     }
+     else
+     {
+         item=stack[top];
+         top--;
+         printf("pop element is : %d",item);
+     }
+     
+ }
+
+
+
+ void peek(){
+
+     if (top==-1)
+     {
+        printf("stack is empty\n");
+     }
+     else
+     {
+         printf(" top element is :%d",stack[top]);
+     }
+     
+ }
+
+ void display(){
+    int i;
+    for ( i = top; i >=0; i--)
+    {
+        printf("element : %d\n",stack[i]);
+    }
+    
+ }
