@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<conio.h>
+void swap(int *xp,int *yp)
+{int temp;
+temp=*xp;
+*xp=*yp;
+*yp=temp;
+}
+void selectionsort(int a[],int n)
+{ int i,j,min;
+for(i=0;i<n-1;i++)
+{
+min=i;
+for(j=i+1;j<n;j++)
+if(a[j]<a[min])
+min=j;
+swap(&a[min], &a[i]);
+}}
+
+void print(int a[], int size)
+{
+int i;
+for(i=0;i<size;i++)
+printf("%d\t", a[i]);
+printf("\n");
+}
+void main()
+{
+int a[]={22,312,44,53,1,3};
+
+int n= sizeof(a)/sizeof(a[0]);
+   clrscr();
+selectionsort(a,n);
+printf("SORTED ARRAY: \n");
+print(a,n);
+getch();
+}
